@@ -1,0 +1,12 @@
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Manifest-Version: 1.0
+Bundle-Vendor: org.nuxeo.ecm.platform.hocr
+Bundle-Version: 1.0.0
+Bundle-Name: org.nuxeo.ecm.platform.hocr
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.nuxeo.ecm.platform.hocr;singleton=true
+Nuxeo-Component: OSGI-INF/hocr-automation-contrib.xml,
+  OSGI-INF/hocr-command-contrib.xml,
+  OSGI-INF/hocr-converter-contrib.xml,
+  OSGI-INF/hocr-operation-contrib.xml

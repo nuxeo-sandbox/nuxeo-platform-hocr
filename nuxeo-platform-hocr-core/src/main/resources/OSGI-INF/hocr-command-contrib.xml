@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.ecm.platform.hocr.commands" version="1.0">
+
+  <require>org.nuxeo.ecm.platform.commandline.executor.service.defaultContrib</require>
+
+  <extension target="org.nuxeo.ecm.platform.commandline.executor.service.CommandLineExecutorComponent"
+    point="command">
+    <command name="hocr_binarize" enabled="true">
+      <commandLine>convert</commandLine>
+      <parameterString>-define registry:temporary-path=#{nuxeo.tmp.dir} -quiet -colorspace gray -fill white -resize
+        #{scale}%
+        -sharpen 0x1 #{sourceFilePath} #{targetFilePath}.#{type}
+      </parameterString>
+      <winParameterString>-define registry:temporary-path=#{nuxeo.tmp.dir} -quiet -colorspace gray -fill white -resize
+        #{scale}% -sharpen 0x1 #{sourceFilePath} #{targetFilePath}.#{type}
+      </winParameterString>
+      <installationDirective>You need to install ImageMagick.</installationDirective>
+    </command>
+    <command name="hocr_tesseract" enabled="true">
+      <commandLine>tesseract</commandLine>
+      <parameterString>--oem #{oem} --psm #{psm} -l #{language} #{sourceFilePath} #{targetFilePath} #{format}
+      </parameterString>
+      <winParameterString>--oem #{oem} --psm #{psm} -l #{language} #{sourceFilePath} #{targetFilePath} #{format}
+      </winParameterString>
+      <installationDirective>You need to install tesseract.</installationDirective>
+    </command>
+    <command name="hocr_scale" enabled="true">
+      <commandLine>hocr-scale</commandLine>
+      <parameterString>--percent #{scale} --savefile #{targetFilePath} #{sourceFilePath}
+      </parameterString>
+      <installationDirective>You need to install hocr-tools with pip.</installationDirective>
+    </command>
+    <command name="hocr_pdf" enabled="true">
+      <commandLine>hocr-pdf</commandLine>
+      <parameterString>--savefile #{targetFilePath} --text #{hocrFilePath} #{sourceFilePath}</parameterString>
+      <installationDirective>You need to install hocr-tools with pip.</installationDirective>
+    </command>    
+  </extension>
+
+</component>

@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.ecm.platform.hocr.converters" version="1.0">
+
+  <require>org.nuxeo.ecm.platform.convert.plugins</require>
+
+  <extension point="mimetype" target="org.nuxeo.ecm.platform.mimetype.service.MimetypeRegistryService">
+    <mimetype normalized="text/hocr+xml" binary="false" iconPath="text.png">
+      <mimetypes>
+        <mimetype>text/html</mimetype>
+        <mimetype>text/hocr+xml</mimetype>
+        <mimetype>text/hocr+html</mimetype>
+      </mimetypes>
+      <extensions>
+        <extension>hocr</extension>
+      </extensions>
+    </mimetype>
+  </extension>
+
+  <extension target="org.nuxeo.ecm.core.convert.service.ConversionServiceImpl" point="converter">
+    <converter name="hocr_binarize" enabled="true"
+      class="org.nuxeo.ecm.platform.hocr.converter.CommandLineBlobConverter">
+      <sourceMimeType>image/jpeg</sourceMimeType>
+      <sourceMimeType>image/png</sourceMimeType>
+      <sourceMimeType>image/gif</sourceMimeType>
+      <destinationMimeType>image/jpeg</destinationMimeType>
+      <parameters>
+        <parameter name="CommandLineName">hocr_binarize</parameter>
+        <parameter name="scale">400</parameter>
+        <parameter name="type">jpg</parameter>
+      </parameters>
+    </converter>
+    <converter name="hocr_tesseract" enabled="true"
+      class="org.nuxeo.ecm.platform.hocr.converter.CommandLineBlobConverter">
+      <sourceMimeType>image/jpeg</sourceMimeType>
+      <sourceMimeType>image/png</sourceMimeType>
+      <sourceMimeType>image/gif</sourceMimeType>
+      <destinationMimeType>text/hocr+xml</destinationMimeType>
+      <parameters>
+        <parameter name="CommandLineName">hocr_tesseract</parameter>
+        <parameter name="psm">1</parameter>
+        <parameter name="oem">3</parameter>
+        <parameter name="language">eng</parameter>
+        <parameter name="format">hocr</parameter>
+      </parameters>
+    </converter>
+    <converter name="hocr_scale" enabled="true"
+      class="org.nuxeo.ecm.platform.hocr.converter.CommandLineBlobConverter">
+      <sourceMimeType>text/hocr+xml</sourceMimeType>
+      <destinationMimeType>text/hocr+xml</destinationMimeType>
+      <parameters>
+        <parameter name="CommandLineName">hocr_scale</parameter>
+        <parameter name="scale">25</parameter>
+      </parameters>
+    </converter>
+    <converter name="hocr_pdf" enabled="true"
+      class="org.nuxeo.ecm.platform.hocr.converter.CommandLineBlobConverter">
+      <sourceMimeType>image/jpeg</sourceMimeType>
+      <destinationMimeType>application/pdf</destinationMimeType>
+      <parameters>
+        <parameter name="CommandLineName">hocr_pdf</parameter>
+      </parameters>
+    </converter>
+  </extension>
+
+</component>
