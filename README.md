@@ -26,9 +26,13 @@ Build with maven (at least 3.3)
 ```
 mvn clean install
 ```
+
+> Test with tesseract, hocr-tools installation, add to maven build: `-Dnuxeo.test.core=ocr`
+
 > Package built here: `nuxeo-platform-hocr-package/target`
 
 > Install with `nuxeoctl mp-install <package>`
+
 
 ## Use
 
