@@ -29,9 +29,9 @@ public final class IgnoreNoOCR implements ConditionalIgnoreRule.Condition {
     public static final boolean OCR_FORCE = false;
 
     // compat with what's done in StorageConfiguration
-    public static final String CORE_PROPERTY = "nuxeo.test.core";
+    public static final String CORE_PROPERTY = "nuxeo.test.hocr";
 
-    public static final String CORE_OCR = "ocr";
+    public static final String CORE_OCR = "true";
 
     @Override
     public boolean shouldIgnore() {
@@ -39,7 +39,7 @@ public final class IgnoreNoOCR implements ConditionalIgnoreRule.Condition {
             return false;
         }
         String core = System.getProperty(CORE_PROPERTY);
-        if (core != null && core.contains(CORE_OCR)) {
+        if (CORE_OCR.equals(core)) {
             return false;
         }
         return true;

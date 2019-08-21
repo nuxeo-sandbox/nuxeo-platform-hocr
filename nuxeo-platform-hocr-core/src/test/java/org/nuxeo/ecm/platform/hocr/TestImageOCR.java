@@ -51,5 +51,6 @@ public class TestImageOCR extends BaseConverterTest {
         Blob blob = (Blob) automationService.run(ctx, "Document.OCR.ToPDF", Collections.emptyMap());
         assertNotNull(blob);
         assertEquals("application/pdf", blob.getMimeType());
+        assertEquals("source.pdf", blob.getFilename());
     }
 }

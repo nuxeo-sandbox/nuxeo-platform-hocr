@@ -67,21 +67,39 @@ public class OCRCombine {
         return service.convertToMimeType("image/jpeg", bh, Collections.emptyMap());
     }
 
+    protected Blob blobName(BlobHolder orig, Blob pdf) {
+        String name = orig.getBlob().getFilename();
+        if (name == null) {
+            name = "ocr.pdf";
+        } else {
+            int period = name.lastIndexOf('.');
+            if (period > 0) {
+                name = name.substring(0, period) + ".pdf";
+            } else {
+                name += ".pdf";
+            }
+        }
+        pdf.setFilename(name);
+        return pdf;
+    }
+
     @OperationMethod
     public Blob run(DocumentModel doc) throws OperationException {
         BlobHolder bh = doc.getAdapter(BlobHolder.class);
         if (bh == null) {
             return null;
         }
-        bh = checkBlob(bh);
-        return service.convert(CONVERTER, bh, params()).getBlob();
+        BlobHolder jpg = checkBlob(bh);
+        Blob pdf = service.convert(CONVERTER, jpg, params()).getBlob();
+        return blobName(bh, pdf);
     }
 
     @OperationMethod
     public Blob run(Blob blob) throws OperationException {
         BlobHolder bh = new SimpleBlobHolder(blob);
-        bh = checkBlob(bh);
-        return service.convert(CONVERTER, bh, params()).getBlob();
+        BlobHolder jpg = checkBlob(bh);
+        Blob pdf = service.convert(CONVERTER, jpg, params()).getBlob();
+        return blobName(bh, pdf);
     }
 
     @OperationMethod
