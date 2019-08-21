@@ -44,6 +44,7 @@ public class TestImageOCR extends BaseConverterTest {
     @Test
     public void testOCRAutomationChain() throws IOException, OperationException {
         BlobHolder pdfBH = getBlobFromPath("data/source.png");
+        pdfBH.getBlob().setMimeType("image/png");
         DocumentBlobHolder bh = createDocumentBlob(pdfBH.getBlob());
 
         OperationContext ctx = new OperationContext(session);

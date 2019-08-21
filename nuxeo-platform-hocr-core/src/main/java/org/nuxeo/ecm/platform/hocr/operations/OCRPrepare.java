@@ -49,7 +49,9 @@ public class OCRPrepare {
         if (bh == null) {
             return null;
         }
-        return service.convert(CONVERTER, bh, params()).getBlob();
+        // Run the preparation and return a copy, not the content
+        SimpleBlobHolder copy = new SimpleBlobHolder(bh.getBlob());
+        return service.convert(CONVERTER, copy, params()).getBlob();
     }
 
     @OperationMethod

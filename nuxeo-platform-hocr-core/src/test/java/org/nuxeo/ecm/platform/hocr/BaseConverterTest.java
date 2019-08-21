@@ -51,7 +51,7 @@ import org.nuxeo.runtime.api.Framework;
  */
 public abstract class BaseConverterTest {
 
-    static final String HOCR_MIME_TYPE = "text/hocr+xml";
+    static final String HOCR_MIME_TYPE = "text/html";
 
     @Inject
     protected ConversionService cs;

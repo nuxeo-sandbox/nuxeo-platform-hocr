@@ -64,7 +64,7 @@ public class OCRCombine {
         if ("image/jpeg".equals(img.getMimeType()) || "image/jpg".equals(img.getMimeType())) {
             return bh;
         }
-        return service.convertToMimeType("image/jpeg", bh, Collections.emptyMap());
+        return service.convert("ocrImage2jpeg", bh, Collections.emptyMap());
     }
 
     protected Blob blobName(BlobHolder orig, Blob pdf) {

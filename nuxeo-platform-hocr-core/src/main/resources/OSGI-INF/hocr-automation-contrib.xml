@@ -3,7 +3,6 @@
 
   <extension point="chains" target="org.nuxeo.ecm.core.operation.OperationServiceComponent">
     <chain id="Document.OCR.ToPDF">
-      <operation id="Context.FetchDocument"/>
       <operation id="Context.SetInputAsVar">
         <param type="string" name="name">currentDocument</param>
       </operation>
