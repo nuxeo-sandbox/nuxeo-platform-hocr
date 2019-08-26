@@ -72,6 +72,14 @@
         <parameter name="CommandLineName">hocr_pdf</parameter>
       </parameters>
     </converter>
+    <converter name="hocr_pdf_box" enabled="true"
+      class="org.nuxeo.ecm.platform.hocr.converter.CommandLineBlobConverter">
+      <sourceMimeType>image/jpeg</sourceMimeType>
+      <destinationMimeType>application/pdf</destinationMimeType>
+      <parameters>
+        <parameter name="CommandLineName">hocr_pdf_box</parameter>
+      </parameters>
+    </converter>
   </extension>
 
 </component>

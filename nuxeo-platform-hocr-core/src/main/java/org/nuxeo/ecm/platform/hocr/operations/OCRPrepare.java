@@ -34,8 +34,8 @@ public class OCRPrepare {
     @Context
     protected ConversionService service;
 
-    @Param(name = "scale", description = "Scaling factor to use for converter", required = false)
-    protected String scale = "400";
+    @Param(name = "scale", description = "Scaling factor (multiplier) to use for converter", required = false)
+    protected String scale = "4.0";
 
     protected Map<String, Serializable> params() {
         Map<String, Serializable> params = new HashMap<>();

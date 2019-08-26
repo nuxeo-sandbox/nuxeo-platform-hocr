@@ -32,8 +32,8 @@ public class OCRPostProcess {
     @Context
     protected ConversionService service;
 
-    @Param(name = "scale", description = "Scaling factor to use for converter (inverse of prep)", required = false)
-    protected String scale = "25";
+    @Param(name = "percent", description = "Scaling factor (%) to use for converter (inverse of prep)", required = false)
+    protected String scale = "20";
 
     protected Map<String, Serializable> params() {
         Map<String, Serializable> params = new HashMap<>();

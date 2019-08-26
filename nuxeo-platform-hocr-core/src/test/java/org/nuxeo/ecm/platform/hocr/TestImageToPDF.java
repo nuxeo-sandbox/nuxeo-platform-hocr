@@ -22,6 +22,7 @@ package org.nuxeo.ecm.platform.hocr;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +59,7 @@ public class TestImageToPDF extends BaseConverterTest {
 
         BlobHolder pdfBH = getBlobFromPath("data/source.png");
         Map<String, Serializable> parameters = new HashMap<>();
-        parameters.put("scale", "500");
+        parameters.put("scale", "5.0");
 
         BlobHolder result = cs.convert(converterName, pdfBH, parameters);
         assertNotNull(result);
@@ -70,6 +71,9 @@ public class TestImageToPDF extends BaseConverterTest {
         Blob mainBlob = result.getBlob();
         assertNotNull(mainBlob.getFilename());
         assertEquals("image/jpeg", mainBlob.getMimeType());
+        File f = new File(mainBlob.getFile().getParentFile(), "scaled.jpg");
+        mainBlob.getFile().renameTo(f);
+        System.out.println("1.0 Binarize: " + f.getAbsolutePath());
     }
 
     @Test
@@ -92,6 +96,9 @@ public class TestImageToPDF extends BaseConverterTest {
         Blob mainBlob = result.getBlob();
         assertNotNull(mainBlob.getFilename());
         assertEquals(HOCR_MIME_TYPE, mainBlob.getMimeType());
+        File f = new File(mainBlob.getFile().getParentFile(), "scaled.hocr");
+        mainBlob.getFile().renameTo(f);
+        System.out.println("2.0 Extract: " + f.getAbsolutePath());
     }
 
     @Test
@@ -101,9 +108,9 @@ public class TestImageToPDF extends BaseConverterTest {
         checkConverterAvailability(converterName);
         checkCommandAvailability(converterName);
 
-        BlobHolder pdfBH = getBlobFromPath("data/large.hocr");
+        BlobHolder pdfBH = getBlobFromPath("data/scaled.hocr");
         Map<String, Serializable> parameters = new HashMap<>();
-        parameters.put("scale", "20");
+        parameters.put("percent", "20");
 
         BlobHolder result = cs.convert(converterName, pdfBH, parameters);
         assertNotNull(result);
@@ -115,6 +122,37 @@ public class TestImageToPDF extends BaseConverterTest {
         Blob mainBlob = result.getBlob();
         assertNotNull(mainBlob.getFilename());
         assertEquals(HOCR_MIME_TYPE, mainBlob.getMimeType());
+        File f = new File(mainBlob.getFile().getParentFile(), "source.hocr");
+        mainBlob.getFile().renameTo(f);
+        System.out.println("3.0 Scale: " + f.getAbsolutePath());
+    }
+
+    @Test
+    public void testHocrMergeScaledPdf() throws Exception {
+        String converterName = "hocr_pdf_box";
+
+        checkConverterAvailability(converterName);
+        checkCommandAvailability(converterName);
+
+        BlobHolder ocrText = getBlobFromPath("data/scaled.hocr");
+        BlobHolder sourceImage = getBlobFromPath("data/scaled.jpg");
+        Map<String, Serializable> parameters = new HashMap<>();
+        parameters.put("targetFilePath", "ocr.pdf");
+        parameters.put("hocrFilePath", new BlobWrapper(ocrText.getBlob()));
+
+        BlobHolder result = cs.convert(converterName, sourceImage, parameters);
+        assertNotNull(result);
+
+        List<Blob> blobs = result.getBlobs();
+        assertNotNull(blobs);
+        assertEquals(1, blobs.size());
+
+        Blob mainBlob = result.getBlob();
+        assertNotNull(mainBlob.getFilename());
+        assertEquals("application/pdf", mainBlob.getMimeType());
+        File f = new File(mainBlob.getFile().getParentFile(), "scaledpdf.pdf");
+        mainBlob.getFile().renameTo(f);
+        System.out.println("PDF: " + f.getAbsolutePath());
     }
 
     @Test
@@ -124,7 +162,7 @@ public class TestImageToPDF extends BaseConverterTest {
         checkConverterAvailability(converterName);
         checkCommandAvailability(converterName);
 
-        BlobHolder ocrText = getBlobFromPath("data/scaled.hocr");
+        BlobHolder ocrText = getBlobFromPath("data/source.hocr");
         BlobHolder sourceImage = getBlobFromPath("data/source.jpg");
         Map<String, Serializable> parameters = new HashMap<>();
         parameters.put("targetFilePath", "ocr.pdf");
@@ -140,5 +178,36 @@ public class TestImageToPDF extends BaseConverterTest {
         Blob mainBlob = result.getBlob();
         assertNotNull(mainBlob.getFilename());
         assertEquals("application/pdf", mainBlob.getMimeType());
+        File f = new File(mainBlob.getFile().getParentFile(), "pdf.pdf");
+        mainBlob.getFile().renameTo(f);
+        System.out.println("PDF: " + f.getAbsolutePath());
+    }
+
+    @Test
+    public void testHocrMergePdfBox() throws Exception {
+        String converterName = "hocr_pdf_box";
+
+        checkConverterAvailability(converterName);
+        checkCommandAvailability(converterName);
+
+        BlobHolder ocrText = getBlobFromPath("data/source.hocr");
+        BlobHolder sourceImage = getBlobFromPath("data/source.jpg");
+        Map<String, Serializable> parameters = new HashMap<>();
+        parameters.put("targetFilePath", "ocrBox.pdf");
+        parameters.put("hocrFilePath", new BlobWrapper(ocrText.getBlob()));
+
+        BlobHolder result = cs.convert(converterName, sourceImage, parameters);
+        assertNotNull(result);
+
+        List<Blob> blobs = result.getBlobs();
+        assertNotNull(blobs);
+        assertEquals(1, blobs.size());
+
+        Blob mainBlob = result.getBlob();
+        assertNotNull(mainBlob.getFilename());
+        assertEquals("application/pdf", mainBlob.getMimeType());
+        File f = new File(mainBlob.getFile().getParentFile(), "pdfbox.pdf");
+        mainBlob.getFile().renameTo(f);
+        System.out.println("PDF Box: " + f.getAbsolutePath());
     }
 }

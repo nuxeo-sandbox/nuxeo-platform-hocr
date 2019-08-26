@@ -30,6 +30,8 @@ public class OCRCombine {
     public static final String ID = "Document.OCRCombine";
 
     public static final String CONVERTER = "hocr_pdf";
+    
+    public static final String CONVERTER_BOX = CONVERTER + "_box";
 
     @Context
     protected OperationContext ctx;
@@ -42,6 +44,9 @@ public class OCRCombine {
 
     @Param(name = "hocrVar", description = "Name of the context variable containing the hOCR text data.", required = false)
     protected String name = "text";
+    
+    @Param(name = "box", description = "Draw a box around the identified text.", required = false)
+    protected boolean box = false;
 
     public Blob restoreBlob() throws OperationException {
         Object obj = ctx.get(name);
@@ -90,7 +95,7 @@ public class OCRCombine {
             return null;
         }
         BlobHolder jpg = checkBlob(bh);
-        Blob pdf = service.convert(CONVERTER, jpg, params()).getBlob();
+        Blob pdf = service.convert(box ? CONVERTER_BOX : CONVERTER, jpg, params()).getBlob();
         return blobName(bh, pdf);
     }
 
@@ -98,7 +103,7 @@ public class OCRCombine {
     public Blob run(Blob blob) throws OperationException {
         BlobHolder bh = new SimpleBlobHolder(blob);
         BlobHolder jpg = checkBlob(bh);
-        Blob pdf = service.convert(CONVERTER, jpg, params()).getBlob();
+        Blob pdf = service.convert(box ? CONVERTER_BOX : CONVERTER, jpg, params()).getBlob();
         return blobName(bh, pdf);
     }
 

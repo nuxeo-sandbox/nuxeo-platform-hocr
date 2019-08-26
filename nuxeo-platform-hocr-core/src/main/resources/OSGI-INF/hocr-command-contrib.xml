@@ -15,11 +15,13 @@
     </command>
     <command name="hocr_binarize" enabled="true">
       <commandLine>convert</commandLine>
-      <parameterString>-define registry:temporary-path=#{nuxeo.tmp.dir} -quiet -colorspace gray -fill white -resize
-        #{scale}% -sharpen 0x1 #{sourceFilePath} #{targetFilePath}.#{type}
+      <parameterString>-define registry:temporary-path=#{nuxeo.tmp.dir} -quiet -colorspace gray -fill white
+        -matte -virtual-pixel transparent -affine #{scale},0,0,#{scale},0,0 -transform +repage -sharpen 0x1
+        #{sourceFilePath} #{targetFilePath}.#{type}
       </parameterString>
-      <winParameterString>-define registry:temporary-path=#{nuxeo.tmp.dir} -quiet -colorspace gray -fill white -resize
-        #{scale}% -sharpen 0x1 #{sourceFilePath} #{targetFilePath}.#{type}
+      <winParameterString>-define registry:temporary-path=#{nuxeo.tmp.dir} -quiet -colorspace gray -fill white
+        -matte -virtual-pixel transparent -affine #{scale},0,0,#{scale},0,0 -transform +repage -sharpen 0x1
+        #{sourceFilePath} #{targetFilePath}.#{type}
       </winParameterString>
       <installationDirective>You need to install ImageMagick.</installationDirective>
     </command>
@@ -35,11 +37,19 @@
       <commandLine>hocr-scale</commandLine>
       <parameterString>--percent #{scale} --savefile #{targetFilePath} #{sourceFilePath}
       </parameterString>
+      <winParameterString>--percent #{scale} --savefile #{targetFilePath} #{sourceFilePath}</winParameterString>
       <installationDirective>You need to install hocr-tools with pip.</installationDirective>
     </command>
     <command name="hocr_pdf" enabled="true">
       <commandLine>hocr-pdf</commandLine>
       <parameterString>--savefile #{targetFilePath} --text #{hocrFilePath} #{sourceFilePath}</parameterString>
+      <winParameterString>--savefile #{targetFilePath} --text #{hocrFilePath} #{sourceFilePath}</winParameterString>
+      <installationDirective>You need to install hocr-tools with pip.</installationDirective>
+    </command>
+    <command name="hocr_pdf_box" enabled="true">
+      <commandLine>hocr-pdf-box</commandLine>
+      <parameterString>--savefile #{targetFilePath} --text #{hocrFilePath} #{sourceFilePath}</parameterString>
+      <winParameterString>--savefile #{targetFilePath} --text #{hocrFilePath} #{sourceFilePath}</winParameterString>
       <installationDirective>You need to install hocr-tools with pip.</installationDirective>
     </command>
   </extension>
