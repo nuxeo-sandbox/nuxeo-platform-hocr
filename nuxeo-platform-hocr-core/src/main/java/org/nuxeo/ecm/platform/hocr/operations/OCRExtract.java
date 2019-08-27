@@ -37,9 +37,21 @@ public class OCRExtract {
     @Param(name = "language", description = "Language(s) to use for tesseract engine", required = false)
     protected String language = "eng";
 
+    @Param(name = "psm", description = "Page and Script Options", required = false)
+    protected String psm = null;
+
+    @Param(name = "oem", description = "Text Detection Engine", required = false)
+    protected String oem = null;
+
     protected Map<String, Serializable> params() {
         Map<String, Serializable> params = new HashMap<>();
         params.put("language", language);
+        if (psm != null) {
+            params.put("psm", psm);
+        }
+        if (oem != null) {
+            params.put("oem", oem);
+        }
         return params;
     }
 
