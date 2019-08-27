@@ -1,27 +1,66 @@
 <?xml version="1.0"?>
 <component name="org.nuxeo.ecm.platform.hocr.automation" version="1.0">
 
-  <extension point="chains" target="org.nuxeo.ecm.core.operation.OperationServiceComponent">
-    <chain id="Document.OCR.ToPDF">
-      <operation id="Context.SetInputAsVar">
-        <param type="string" name="name">currentDocument</param>
-      </operation>
-      <!-- Source document with image -->
-      <operation id="Document.OCRPrepare" />
-      <!-- Blob is scaled image (binarized) -->
-      <operation id="Blob.OCRExtract" />
-      <!-- Blob is HOCR output -->
-      <operation id="Blob.OCRPostProcess" />
-      <operation id="Context.SetInputAsVar">
-        <param type="string" name="name">text</param>
-      </operation>
-      <!-- HOCR saved off -->
-      <operation id="Context.RestoreDocumentInput">
-        <param type="string" name="name">currentDocument</param>
-      </operation>
-      <!-- Generate PDF -->
-      <operation id="Document.OCRCombine" />
-    </chain>
+  <extension target="org.nuxeo.automation.scripting.internals.AutomationScriptingComponent" point="operation">
+
+    <scriptedOperation id="javascript.AttachOCRPDF">
+      <inputType>document</inputType>
+      <outputType>document</outputType>
+      <category>javascript</category>
+      <param name="box" type="string"/>
+      <param name="language" type="string"/>
+      <param name="xpath" type="string"/>
+      <description>Extract text from the image and convert to searchable PDF.</description>
+      <script><![CDATA[
+function run(input, params) {
+  var xpath = 'file:content';
+  var lang = 'eng';
+  if (params.xpath) {
+    xpath = params.xpath;
+  }
+  if (params.language) {
+    lang = params.language;
+  }
+  var data = Document.GetBlob(
+    input, {
+      'xpath': xpath
+    }
+  );
+  var image = Document.OCRPrepare(
+    data, {
+      'scale': '4.0'
+    }
+  );
+  ctx.text = Blob.OCRExtract(
+    image, {
+      'language': lang
+    }
+  );
+  ctx.text = Blob.OCRPostProcess(
+    ctx.text, {
+      'percent': '25'
+    }
+  );
+  ctx.text.setFilename('hocr.html');
+  ctx.text.setMimeType('text/html');
+  var pdf = Document.OCRCombine(
+    input, {
+      'box': true
+    }
+  );
+  xpath = 'files:files';
+  Blob.AttachOnDocument(
+    pdf, {
+      'document': input,
+      'save': true,
+      'xpath': xpath
+    }
+  );
+  return input;
+}
+      ]]></script>
+    </scriptedOperation>
+
   </extension>
 
 </component>
