@@ -8,18 +8,16 @@
       <outputType>document</outputType>
       <category>javascript</category>
       <param name="box" type="string"/>
+      <param name="psm" type="string"/>
+      <param name="oem" type="string"/>
       <param name="language" type="string"/>
       <param name="xpath" type="string"/>
       <description>Extract text from the image and convert to searchable PDF.</description>
       <script><![CDATA[
 function run(input, params) {
   var xpath = 'file:content';
-  var lang = 'eng';
   if (params.xpath) {
     xpath = params.xpath;
-  }
-  if (params.language) {
-    lang = params.language;
   }
   var data = Document.GetBlob(
     input, {
@@ -31,24 +29,36 @@ function run(input, params) {
       'scale': '4.0'
     }
   );
+  var ocrOpts = {
+    'language': lang
+  };
+  if (params.language) {
+    ocrOpts.language = params.language;
+  }
+  if (params.psm) {
+    ocrOpts.psm = params.psm;
+  }
+  if (params.oem) {
+    ocrOpts.oem = params.oem;
+  }
   ctx.text = Blob.OCRExtract(
-    image, {
-      'language': lang
-    }
+    image, ocrOpts
   );
   ctx.text = Blob.OCRPostProcess(
     ctx.text, {
-      'percent': '25'
+      'percent': "25"
     }
   );
   ctx.text.setFilename('hocr.html');
   ctx.text.setMimeType('text/html');
   var pdf = Document.OCRCombine(
     input, {
-      'box': true
+      'box': params.box === "true"
     }
   );
-  xpath = 'files:files';
+  //if (params.attach) {
+    xpath = 'files:files';
+  //}
   Blob.AttachOnDocument(
     pdf, {
       'document': input,
