@@ -117,7 +117,6 @@ public class TestImageToPDF extends BaseConverterTest {
         checkCommandAvailability(converterName);
 
         BlobHolder pdfBH = new SimpleBlobHolder(get("scaled.jpg"));
-        // BlobHolder pdfBH = getBlobFromPath("data/scaled.jpg");
         Map<String, Serializable> parameters = new HashMap<>();
 
         BlobHolder result = cs.convert(converterName, pdfBH, parameters);
@@ -143,7 +142,6 @@ public class TestImageToPDF extends BaseConverterTest {
         checkCommandAvailability(converterName);
 
         BlobHolder pdfBH = new SimpleBlobHolder(get("scaled.hocr"));
-        // BlobHolder pdfBH = getBlobFromPath("data/scaled.hocr");
         Map<String, Serializable> parameters = new HashMap<>();
         parameters.put("percent", "20");
 
@@ -226,7 +224,6 @@ public class TestImageToPDF extends BaseConverterTest {
         checkCommandAvailability(converterName);
 
         Blob ocrText = get("source.hocr");
-        // BlobHolder ocrText = getBlobFromPath("data/source.hocr");
         BlobHolder sourceImage = getBlobFromPath("data/source.jpg");
         Map<String, Serializable> parameters = new HashMap<>();
         parameters.put("targetFilePath", "ocrBox.pdf");
