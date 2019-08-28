@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Collections;
 
 import javax.inject.Inject;
@@ -16,6 +17,7 @@ import org.nuxeo.ecm.automation.OperationException;
 import org.nuxeo.ecm.automation.test.AutomationFeature;
 import org.nuxeo.ecm.core.api.Blob;
 import org.nuxeo.ecm.core.api.CoreSession;
+import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.blobholder.BlobHolder;
 import org.nuxeo.ecm.core.api.blobholder.DocumentBlobHolder;
 import org.nuxeo.ecm.core.test.DefaultRepositoryInit;
@@ -49,8 +51,12 @@ public class TestImageOCR extends BaseConverterTest {
 
         OperationContext ctx = new OperationContext(session);
         ctx.setInput(bh.getDocument());
-        Blob blob = (Blob) automationService.run(ctx, "Document.OCR.ToPDF", Collections.emptyMap());
-        assertNotNull(blob);
+        DocumentModel doc = (DocumentModel) automationService.run(ctx, "javascript.AttachOCRPDF",
+                Collections.emptyMap());
+        assertNotNull(doc);
+        Serializable p = doc.getPropertyValue("files:files/0/file");
+        Blob blob = (Blob) p;
+        assertNotNull("Blob is empty", blob);
         assertEquals("application/pdf", blob.getMimeType());
         assertEquals("source.pdf", blob.getFilename());
     }

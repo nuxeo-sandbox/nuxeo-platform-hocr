@@ -29,9 +29,7 @@ function run(input, params) {
       'scale': '4.0'
     }
   );
-  var ocrOpts = {
-    'language': lang
-  };
+  var ocrOpts = {};
   if (params.language) {
     ocrOpts.language = params.language;
   }
