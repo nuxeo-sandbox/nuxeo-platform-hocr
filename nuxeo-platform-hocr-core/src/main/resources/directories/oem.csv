@@ -1,0 +1,5 @@
+id,label,obsolete,ordering
+0,Legacy engine only,0,4
+1,Neural nets LSTM engine only,0,3
+2,Legacy + LSTM engines,0,2
+3,Default based on what is available,0,1

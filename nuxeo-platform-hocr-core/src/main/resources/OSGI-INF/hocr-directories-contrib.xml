@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.ecm.platform.hocr.directories" version="1.0">
+
+  <extension target="org.nuxeo.ecm.directory.GenericDirectory" point="directories">
+    <directory name="hOCRLanguages" extends="template-vocabulary">
+      <dataFile>directories/languages.csv</dataFile>
+    </directory>
+    <directory name="hOCROEM" extends="template-vocabulary">
+      <dataFile>directories/oem.csv</dataFile>
+    </directory>
+    <directory name="hOCRPSM" extends="template-vocabulary">
+      <dataFile>directories/psm.csv</dataFile>
+    </directory>
+  </extension>
+
+</component>

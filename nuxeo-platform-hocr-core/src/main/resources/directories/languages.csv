@@ -1,0 +1,104 @@
+id,label,obsolete,ordering
+osd,Auto-Detect Script,0,0
+afr,Afrikaans,0,1
+amh,Amharic,0,2
+ara,Arabic,0,3
+asm,Assamese,0,4
+aze,Azerbaijani,0,5
+aze_cyrl,Azerbaijani - Cyrillic,0,6
+bel,Belarusian,0,7
+ben,Bengali,0,8
+bod,Tibetan,0,9
+bos,Bosnian,0,10
+bul,Bulgarian,0,11
+cat,Catalan; Valencian,0,12
+ceb,Cebuano,0,13
+ces,Czech,0,14
+chi_sim,Chinese - Simplified,0,15
+chi_tra,Chinese - Traditional,0,16
+chr,Cherokee,0,17
+cym,Welsh,0,18
+dan,Danish,0,19
+deu,German,0,20
+dzo,Dzongkha,0,21
+ell,Greek; Modern (1453-),0,22
+eng,English,0,23
+enm,English; Middle (1100-1500),0,24
+epo,Esperanto,0,25
+est,Estonian,0,26
+eus,Basque,0,27
+fas,Persian,0,28
+fin,Finnish,0,29
+fra,French,0,30
+frk,German Fraktur,0,31
+frm,French; Middle (ca. 1400-1600),0,32
+gle,Irish,0,33
+glg,Galician,0,34
+grc,Greek; Ancient (-1453),0,35
+guj,Gujarati,0,36
+hat,Haitian; Haitian Creole,0,37
+heb,Hebrew,0,38
+hin,Hindi,0,39
+hrv,Croatian,0,40
+hun,Hungarian,0,41
+iku,Inuktitut,0,42
+ind,Indonesian,0,43
+isl,Icelandic,0,44
+ita,Italian,0,45
+ita_old,Italian - Old,0,46
+jav,Javanese,0,47
+jpn,Japanese,0,48
+kan,Kannada,0,49
+kat,Georgian,0,50
+kat_old,Georgian - Old,0,51
+kaz,Kazakh,0,52
+khm,Central Khmer,0,53
+kir,Kirghiz; Kyrgyz,0,54
+kor,Korean,0,55
+kur,Kurdish,0,56
+lao,Lao,0,57
+lat,Latin,0,58
+lav,Latvian,0,59
+lit,Lithuanian,0,60
+mal,Malayalam,0,61
+mar,Marathi,0,62
+mkd,Macedonian,0,63
+mlt,Maltese,0,64
+msa,Malay,0,65
+mya,Burmese,0,66
+nep,Nepali,0,67
+nld,Dutch; Flemish,0,68
+nor,Norwegian,0,69
+ori,Oriya,0,70
+pan,Panjabi; Punjabi,0,71
+pol,Polish,0,72
+por,Portuguese,0,73
+pus,Pushto; Pashto,0,74
+ron,Romanian; Moldavian; Moldovan,0,75
+rus,Russian,0,76
+san,Sanskrit,0,77
+sin,Sinhala; Sinhalese,0,78
+slk,Slovak,0,79
+slv,Slovenian,0,80
+spa,Spanish; Castilian,0,81
+spa_old,Spanish; Castilian - Old,0,82
+sqi,Albanian,0,83
+srp,Serbian,0,84
+srp_latn,Serbian - Latin,0,85
+swa,Swahili,0,86
+swe,Swedish,0,87
+syr,Syriac,0,88
+tam,Tamil,0,89
+tel,Telugu,0,90
+tgk,Tajik,0,91
+tgl,Tagalog,0,92
+tha,Thai,0,93
+tir,Tigrinya,0,94
+tur,Turkish,0,95
+uig,Uighur; Uyghur,0,96
+ukr,Ukrainian,0,97
+urd,Urdu,0,98
+uzb,Uzbek,0,99
+uzb_cyrl,Uzbek - Cyrillic,0,100
+vie,Vietnamese,0,101
+yid,Yiddish,0,102

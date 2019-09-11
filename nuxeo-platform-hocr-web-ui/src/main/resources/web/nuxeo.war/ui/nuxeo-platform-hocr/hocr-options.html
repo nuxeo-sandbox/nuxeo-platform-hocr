@@ -1,0 +1,161 @@
+<!--
+`hocr-options`
+@group Nuxeo UI
+@element hocr-options
+-->
+<dom-module id="hocr-options">
+    <template>
+        <style include="nuxeo-action-button-styles">
+            .content {
+                @apply(--layout-vertical);
+            }
+        </style>
+
+        <nuxeo-operation id="ocr" op="javascript.AttachOCRPDF" input="[[document.uid]]"
+            params="[[_params(box, language)]]"></nuxeo-operation>
+
+        <template is="dom-if" if="[[_isAvailable(document)]]">
+            <div class="action" on-tap="_toggleDialog">
+                <paper-icon-button id="bt" icon="[[icon]]"></paper-icon-button>
+                <span class="label" hidden$="[[!showLabel]]">[[label]]</span>
+            </div>
+            <paper-tooltip for="bt">[[label]]</paper-tooltip>
+        </template>
+
+        <nuxeo-dialog id="dialog" with-backdrop>
+            <h2>OCR Extract</h2>
+            <div class="content">
+                <nuxeo-directory-suggestion role="widget" label="Language" directory-name="hOCRLanguages"
+                    name="language" value="{{language}}" dbl10n="true" placeholder="English" min-chars="0">
+                </nuxeo-directory-suggestion>
+                <h4>Advanced Options</h4>
+                <paper-checkbox noink checked="{{box}}">
+                    Draw Boxes around text
+                </paper-checkbox>
+                <nuxeo-directory-suggestion role="widget" label="Page / Script Options" directory-name="hOCRPSM"
+                    name="psm" value="{{psm}}" dbl10n="true" placeholder="Default" min-chars="0">
+                </nuxeo-directory-suggestion>
+                <nuxeo-directory-suggestion role="widget" label="OCR Engine" directory-name="hOCROEM" name="oem"
+                    value="{{oem}}" dbl10n="true" placeholder="Default" min-chars="0">
+                </nuxeo-directory-suggestion>
+            </div>
+            <div class="buttons">
+                <paper-button noink dialog-dismiss>Close</paper-button>
+                <paper-button noink dialog-confirm class="primary" on-tap="_ok">Ok</paper-button>
+            </div>
+        </nuxeo-dialog>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'hocr-options',
+            behaviors: [Nuxeo.LayoutBehavior],
+            properties: {
+
+                document: {
+                    type: Object
+                },
+
+                xpath: {
+                    type: String,
+                    value: 'file:content'
+                },
+                blob: {
+                    type: Object
+                },
+
+                label: {
+                    type: String,
+                    value: 'Perform OCR'
+                },
+
+                showLabel: {
+                    type: Boolean,
+                    value: false,
+                },
+
+                icon: {
+                    type: String,
+                    value: 'icons:subject'
+                },
+
+                box: {
+                    type: Boolean,
+                    value: false
+                },
+                language: {
+                    type: Object
+                },
+                oem: {
+                    type: Object
+                },
+                psm: {
+                    type: Object
+                },
+
+                imageTypes: {
+                    type: Array,
+                    readOnly: true,
+                    value: ["image/jpeg", "image/png", "image/gif", "image/tiff"]
+                }
+            },
+
+            _isAvailable: function (document) {
+                if (this._isCompatibleDocument(document)) {
+                    return true;
+                }
+                return false;
+            },
+
+            _deepFind: function (obj, props) {
+                for (var i = 0, path = props.split('/'), len = path.length; i < len; i++) {
+                    if (!obj || obj === []) {
+                        break;
+                    }
+                    obj = obj[path[i]];
+                }
+                return obj;
+            },
+
+            _isCompatibleDocument: function (document) {
+                this.blob = document && this._deepFind(document.properties, this.xpath);
+                if (this.blob) {
+                    return this.imageTypes.indexOf(this.blob['mime-type']) >= 0;
+                }
+                return false;
+            },
+
+            _toggleDialog: function () {
+                this.$.dialog.toggle();
+            },
+
+            _ok: function () {
+                this.$.ocr.execute().then(() => {
+                    this.fire('document-updated');
+                    this.fire('notify', {
+                        message: "OCR Extraction Finished"
+                    });
+                });
+                this.fire('notify', {
+                    message: "OCR Extraction Started"
+                });
+            },
+
+            _params: function () {
+                var opts = {
+                    "box": "" + this.box
+                };
+                if (this.language) {
+                    opts['language'] = this.language;
+                }
+                if (this.psm) {
+                    opts['psm'] = this.psm;
+                }
+                if (this.oem) {
+                    opts['oem'] = this.oem;
+                }
+                return opts;
+            },
+        });
+    </script>
+</dom-module>

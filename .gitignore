@@ -30,3 +30,4 @@ bin/
 *-bak
 *.bak
 .factorypath
+.vscode

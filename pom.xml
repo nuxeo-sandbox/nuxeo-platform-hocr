@@ -15,6 +15,7 @@
 
   <modules>
     <module>nuxeo-platform-hocr-core</module>
+    <module>nuxeo-platform-hocr-web-ui</module>
     <module>nuxeo-platform-hocr-package</module>
   </modules>
 
@@ -60,6 +61,11 @@
       <dependency>
         <groupId>org.nuxeo.ecm.platform.hocr</groupId>
         <artifactId>nuxeo-platform-hocr-core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform.hocr</groupId>
+        <artifactId>nuxeo-platform-hocr-web-ui</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

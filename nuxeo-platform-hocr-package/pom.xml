@@ -27,6 +27,10 @@
       <groupId>org.nuxeo.ecm.platform.hocr</groupId>
       <artifactId>nuxeo-platform-hocr-core</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.nuxeo.ecm.platform.hocr</groupId>
+      <artifactId>nuxeo-platform-hocr-web-ui</artifactId>
+    </dependency>
   </dependencies>
 
   <build>

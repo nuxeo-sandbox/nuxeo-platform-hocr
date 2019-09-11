@@ -9,4 +9,5 @@ Bundle-SymbolicName: org.nuxeo.ecm.platform.hocr;singleton=true
 Nuxeo-Component: OSGI-INF/hocr-automation-contrib.xml,
   OSGI-INF/hocr-command-contrib.xml,
   OSGI-INF/hocr-converter-contrib.xml,
+  OSGI-INF/hocr-directories-contrib.xml,
   OSGI-INF/hocr-operation-contrib.xml
